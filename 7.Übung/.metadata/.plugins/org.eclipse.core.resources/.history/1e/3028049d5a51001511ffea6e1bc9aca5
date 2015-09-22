@@ -1,0 +1,100 @@
+package SierpinskiTriangle;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.Shape;
+
+public class Triangle{
+	private int[] coordinates;
+	private Canvas canvas;
+	private static int[] x = new int[3];
+	private static int[] y = new int[3];
+	private static Color color;
+			
+	public Triangle(int[] coordiantes, Canvas canvas, Color color){
+		coordinates = new int[6];
+		this.coordinates = coordiantes;
+		this.canvas = canvas;
+		this.color = color;
+	}	
+	
+	public void printTriangle(){
+		canvas.drawLine(coordinates[0], coordinates[1], coordinates[2],coordinates[3], color);
+		canvas.drawLine(coordinates[0], coordinates[1], coordinates[4],coordinates[5], color);
+		canvas.drawLine(coordinates[2], coordinates[3], coordinates[4],coordinates[5], color);	
+	}
+	
+	public int[] getCoordinates(){
+		return coordinates;
+	}
+	
+	public void setCoordinates(int x1, int y1, int x2, int y2, int x3, int y3){
+		coordinates[0] = x1;
+		coordinates[1] = y1;
+		coordinates[2] = x2;
+		coordinates[3] = y2;
+		coordinates[4] = x3;
+		coordinates[5] = y3;
+	}
+	
+	public int[][] calculateNewCoordiantes(int[] previousCoordinates){
+		int[] newCoordinates = new int[6];
+		newCoordinates[0] = (previousCoordinates[0]+previousCoordinates[2])/2;
+		newCoordinates[1] = (previousCoordinates[1]+previousCoordinates[3])/2;		
+		newCoordinates[2] = (previousCoordinates[0]+previousCoordinates[4])/2;
+		newCoordinates[3] = (previousCoordinates[1]+previousCoordinates[5])/2;
+		newCoordinates[4] = (previousCoordinates[2]+previousCoordinates[4])/2;
+		newCoordinates[5] = (previousCoordinates[3]+previousCoordinates[5])/2;
+		
+		int[] firstCoordinates = new int[6];
+		firstCoordinates[0] = previousCoordinates[0];
+		firstCoordinates[1] = previousCoordinates[1];
+		firstCoordinates[2] = newCoordinates[2];
+		firstCoordinates[3] = newCoordinates[3];		
+		firstCoordinates[4] = newCoordinates[0];
+		firstCoordinates[5] = newCoordinates[1];
+		
+		int[] secondCoordinates = new int[6];
+		secondCoordinates[0] = newCoordinates[0];
+		secondCoordinates[1] = newCoordinates[1];
+		secondCoordinates[2] = newCoordinates[4];
+		secondCoordinates[3] = newCoordinates[5];
+		secondCoordinates[4] = previousCoordinates[2];
+		secondCoordinates[5] = previousCoordinates[3];
+		
+		int[] thirdCoordinates = new int[6];
+		thirdCoordinates[0] = newCoordinates[2];
+		thirdCoordinates[1] = newCoordinates[3];
+		thirdCoordinates[2] = previousCoordinates[4];
+		thirdCoordinates[3] = previousCoordinates[5];
+		thirdCoordinates[4] = newCoordinates[4];
+		thirdCoordinates[5] = newCoordinates[5];
+		
+		
+		
+		int[][] allCoordinates = new int[4][];
+		allCoordinates[0] = firstCoordinates;
+		allCoordinates[1] = secondCoordinates;
+		allCoordinates[2] = thirdCoordinates;
+		allCoordinates[3] = newCoordinates;
+		
+		return allCoordinates;
+	}
+	
+	public void fillTriangle(){
+		x[0]=coordinates[0]; 
+		x[1]=coordinates[2]; 
+		x[2]=coordinates[4];
+		y[0]=coordinates[1]; 
+		y[1]=coordinates[3]; 
+		y[2]=coordinates[5];
+
+		Polygon p = new Polygon(x, y, 3);  // This polygon represents a triangle with the above
+		                                   //   vertices.
+
+		canvas.returnGraphic().fillPolygon(p);
+	}
+	
+	
+}

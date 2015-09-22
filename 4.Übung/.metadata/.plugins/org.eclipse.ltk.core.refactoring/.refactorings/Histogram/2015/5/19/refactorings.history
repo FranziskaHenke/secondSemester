@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Histogram.HIstogram&apos; to &apos;Histogram&apos;&#x0D;&#x0A;- Original project: &apos;Histogram&apos;&#x0D;&#x0A;- Original element: &apos;Histogram.HIstogram&apos;&#x0D;&#x0A;- Renamed element: &apos;Histogram.Histogram&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;HIstogram&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;Histogram{HIstogram.java[HIstogram" matchStrategy="1" name="Histogram" qualified="false" references="true" similarDeclarations="false" stamp="1430833820149" textual="false" version="1.0"/>
+</session>

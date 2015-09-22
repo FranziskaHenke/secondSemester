@@ -1,0 +1,104 @@
+package SierpinskiTriangle;
+
+import java.awt.Color;
+
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.util.Random;
+
+
+public class SierpinskiTriangle{
+	
+	private static Canvas canvas;
+	private static int height = 0; 
+	private static int width= 0;
+	private static Color backgroundColor = new Color(255, 228, 225);	
+	private static Triangle triangle1;
+	private static int[] currentCoordinateSize;
+	private static Color[] colors= new Color[9];
+	private static int level = 0;
+	
+	
+	public static void main(String args[]){
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		width = (int)screenSize.getWidth();
+		height = (int)screenSize.getHeight();
+		height -= 100;
+		canvas = new Canvas("Canvas", width, height, backgroundColor);
+		
+		initializeColors();
+		drawFirstTriangle();	
+		drawRecursiveTriangles(triangle1, level);	
+	}
+	
+	
+	public static void drawRecursiveTriangles(Triangle previousTriangle, int level){
+		
+		int[][] newCoordinates = new int[4][];
+			newCoordinates = previousTriangle.calculateNewCoordiantes(previousTriangle.getCoordinates());	
+			Triangle triangle1 = new Triangle(newCoordinates[0], canvas, colors[level]);	
+			Triangle triangle2 = new Triangle(newCoordinates[1], canvas, colors[level]);	
+			Triangle triangle3 = new Triangle(newCoordinates[2], canvas, colors[level]);
+			Triangle triangle4 = new Triangle(newCoordinates[3], canvas, colors[level]);
+			
+			triangle1.printTriangle();
+			triangle2.printTriangle();
+			triangle3.printTriangle();
+			triangle4.printTriangle();
+			triangle4.fillTriangle();
+			if(level+1<9){
+				level++;
+			}else{
+				level=1;
+			}
+		currentCoordinateSize = newCoordinates[0];
+		if(!checkTermination(currentCoordinateSize)){			
+				drawRecursiveTriangles(triangle1, level);
+				drawRecursiveTriangles(triangle2, level);
+				drawRecursiveTriangles(triangle3, level);				
+		}
+				
+	}
+	
+	public static void initializeColors(){	
+		colors[0] = new Color(0,139,0) ;		
+		colors[1] = new Color(139,62,47) ;
+		colors[2] = new Color(0,0,128) ;
+		colors[3] = new Color(139, 0, 139) ;
+		colors[4] = new Color(0,100, 0) ;		
+		colors[5] = new Color(191,239,255) ;		
+		colors[6] = new Color(255, 255, 255) ;
+		colors[7] = new Color(0,139,0) ;
+		colors[8] = new Color(0,0,0) ;
+		
+	}
+	
+	public static int[] drawFirstTriangle(){
+		int[] coordinates = new int[6];
+		int distanceToMiddle = (int)Math.round(height*(Math.sin(Math.toRadians(30)))/Math.sin(Math.toRadians((60))));
+		coordinates[0] = (width/2)-distanceToMiddle;
+		coordinates[1] = height;
+		coordinates[2] = width/2;
+		coordinates[3] = 0;		
+		coordinates[4] = (width/2)+distanceToMiddle;
+		coordinates[5] = height;
+		currentCoordinateSize = coordinates;
+		triangle1 = new Triangle(coordinates, canvas, colors[level]);
+		triangle1.printTriangle();
+		return coordinates;
+	}	
+	
+	public static boolean checkTermination(int[] coordinates){
+		if(Math.sqrt(Math.pow(coordinates[0]-coordinates[2],2))<7){
+			return true;
+		}			
+		return false;
+	}
+}
