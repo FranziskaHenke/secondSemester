@@ -1,0 +1,2 @@
+Reverse Polish Notation 
+In this assignment we had to create a stack and use it to convert an equation into reverse polish notation(e.g. (1+2)*3+(4^(5-6)) becomes 12+3*456-^+) and then calculate it(9.25).
